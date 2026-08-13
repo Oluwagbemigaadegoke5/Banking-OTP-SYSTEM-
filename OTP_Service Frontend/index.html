@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vault Guard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">VAULT<span>GUARD</span></div>
+        <div>Account user: <strong>Samuel</strong></div>
+    </nav>
+
+    <div class="container">
+        <div class="main-column">
+            <div class="panel balance-card">
+                <p class="card-label">VaultGuard Core Account</p>
+                <div class="balance-val" id="balanceDisplay">₦2,850,300.75</div>
+                <p class="card-subtext">Account Number : 0994110756</p>
+            </div>
+<div class="panel" style="padding: 12px; margin-bottom: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px;">
+                <p style="font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; letter-spacing: 0.5px;">Other Bills</p>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; text-align: center;">
+                    <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px; cursor: pointer;">
+                        <div style="font-size: 16px; margin-bottom: 4px;">📱</div>
+                        <p style="font-size: 10px; font-weight: 500; color: var(--text-muted); margin: 0;">Airtime</p>
+                    </div>
+                    <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px; cursor: pointer;">
+                        <div style="font-size: 16px; margin-bottom: 4px;">🌐</div>
+                        <p style="font-size: 10px; font-weight: 500; color: var(--text-muted); margin: 0;">Data</p>
+                    </div>
+                    <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px; cursor: pointer;">
+                        <div style="font-size: 16px; margin-bottom: 4px;">⚡</div>
+                        <p style="font-size: 10px; font-weight: 500; color: var(--text-muted); margin: 0;">Electricity</p>
+                    </div>
+                    <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px; cursor: pointer;">
+                        <div style="font-size: 16px; margin-bottom: 4px;">📺</div>
+                        <p style="font-size: 10px; font-weight: 500; color: var(--text-muted); margin: 0;">Cable TV</p>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="panel" id="screenLogin">
+                <h2>Secure Workspace Gateway Access</h2>
+                <div class="form-group">
+                    <label>Operator ID Username</label>
+                    <input type="text" id="loginUser" value="Samuel">
+                </div>
+                <div class="form-group">
+                    <label>System Credentials Password</label>
+                    <input type="password" id="loginPass" value="••••••••">
+                </div>
+                <button class="btn" onclick="navigateTo('screenDashboard')">Access Ledger Desk</button>
+            </div>
+
+            <div class="panel hidden" id="screenDashboard">
+                <h2>Operational Ledger Dashboard</h2>
+                <div class="toggle-box">
+                    <div>
+                        <p class="toggle-title">Evaluation Mode Protocol</p>
+                        <p class="toggle-subtext">Toggle to run side-by-side legacy verification checks.</p>
+                    </div>
+                    <select id="legacyToggle" onchange="updateLegacyUI()">
+                        <option value="false">Vault TOTP (Smart Alternative Model)</option>
+                        <option value="true">Legacy Delivery (Server SMS/Email Mock)</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="navigateTo('screenTransferForm')">Initiate Outbound Liquidity Transfer</button>
+            </div>
+
+            <div class="panel hidden" id="screenTransferForm">
+                <h2>Instant Outbound Liquidity Form</h2>
+                <form id="txForm" onsubmit="handleTransferInitiate(event)">
+                    <div class="form-group">
+                        <label>Beneficiary Institution Vector</label>
+                        <select required id="txBank">
+                            <option value="GTBank">Guaranty Trust Bank</option>
+                            <option value="Zenith">Zenith Bank PLC</option>
+                            <option value="Access">Access Bank</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Target Account Destination ID</label>
+                        <input type="text" required id="txAccount" placeholder="e.g. 0119564822" maxlength="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Liquidity Value Volume (NGN)</label>
+                        <input type="number" required id="txAmount" placeholder="₦ 0.00" step="0.01">
+                    </div>
+                    <button type="submit" class="btn">Route Transfer Intent</button>
+                </form>
+            </div>
+
+            <div class="panel hidden" id="screenConfirm">
+                <h2>Cryptographic Verification Challenge</h2>
+                <p id="confirmPrompt" class="prompt-text"></p>
+                <div class="form-group">
+                    <label>Input Alphanumeric Assertion Token Code</label>
+                    <input type="text" id="inputTokenCode" placeholder="Enter 6-digit code" maxlength="6" class="token-input">
+                </div>
+                <button class="btn" onclick="handleTransferConfirm()">Commit Vault Settlement</button>
+            </div>
+
+            <div class="panel hidden" id="screenStatus">
+                <div class="status-container">
+                    <div id="statusIcon" class="status-icon"></div>
+                    <h2 id="statusTitle" class="status-title"></h2>
+                    <p id="statusDesc" class="status-desc"></p>
+                    <button class="btn" onclick="resetWorkspace()">Return To Ledger Core</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-column">
+            <div class="panel">
+                <h2>Isolated Local Hardware Vault</h2>
+                <p class="panel-subtext">Simulating an independent physical authentication module running locally on-device.</p>
+                
+                <div id="vaultLockScreen">
+                    <div class="form-group">
+                        <label>Enter Vault Security Master PIN</label>
+                        <input type="password" id="vaultPinInput" placeholder="Enter 4-Digit PIN" maxlength="4" class="pin-input">
+                    </div>
+                    <button class="btn" onclick="unlockLocalVault()">Unlock Vault Partition</button>
+                </div>
+
+                <div id="vaultActiveScreen" class="vault-box">
+                    <p class="vault-status">Vault Link: Online</p>
+                    <div class="vault-token" id="vaultTokenDisplay">000000</div>
+                    <div class="timer-ring" id="vaultTimerDisplay">Token Window Expiry: 30s</div>
+                </div>
+            </div>
+
+            <div class="panel card-spacer">
+                <h2>Current Account Ledger Audit</h2>
+                <div id="historyLogs">
+                    <div class="history-item">
+                        <div>
+                            <p class="history-item-title">Zenith Bank • Acct: 0114228941</p>
+                            <p class="history-item-subtext">Historical Log Clearance Base</p>
+                        </div>
+                        <div class="history-amount-negative">-₦4,500,000.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
